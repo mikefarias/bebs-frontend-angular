@@ -1,0 +1,57 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <strong>Viagem</strong> - Cadastro
+    </div>
+    <div class="card-body">
+      <form class="form-horizontal" method="POST" #frm="ngForm" (ngSubmit)="addTravel()">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="text-input">Nome da Viagem</label>
+              <div class="col-md-9">
+                <input type="text" id="title" name="title" [(ngModel)]="travel.title" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="details">Detalhes</label>
+              <div class="col-md-9">
+                <input type="text" id="details" name="details" [(ngModel)]="travel.details" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="startTime">Data de Embarque</label>
+              <div class="col-md-9">
+                <input type="datetime" id="startTime" name="startTime" [(ngModel)]="travel.startTime" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="endTime">Data Desembarque</label>
+              <div class="col-md-9">
+                <input class="form-control" id="endTime" type="datetime" name="endTime" [(ngModel)]="travel.endTime">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="origin">Local de partida</label>
+              <div class="col-md-9">
+                <input type="text" id="origin" name="origin" [(ngModel)]="travel.origin" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="destiny">Local de Destino</label>
+              <div class="col-md-9">
+                <input type="text" id="destiny" name="destiny" [(ngModel)]="travel.destiny" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="select1">Vagas</label>
+              <div class="col-md-9">
+                <input type="datetime" id="start-time" name="start-time" class="form-control">
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Cadastrar</button>
+              <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar   </button>
+            </div>
+          </form>
+    </div>
+  </div>
+</div>

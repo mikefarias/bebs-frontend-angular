@@ -1,0 +1,47 @@
+  <router-outlet></router-outlet>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> Lista de Viagens
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tipo de Excursão</th>
+            <th>Início</th>
+            <th>Fim</th>
+            <th>Origem</th>
+            <th>Desino</th>
+            <th>Total de Vagas </th>
+            <th>Vagas Disponíveis</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let travel of travels">
+              <td>{{travel.title}}</td>
+              <td>{{travel.details}}</td>
+              <td>{{travel.startTime}}</td>
+              <td>{{travel.endTime}}</td>
+              <td>{{travel.origin}}</td>
+              <td>{{travel.destiny}}</td>
+              <td>{{travel.vancancies}}</td>
+              <td>{{travel.vacanciesAvailable}}</td>
+              <td>{{travel.idTravelType}}</td>
+              <td>{{travel.idTravelStatus}}</td>
+              <td>
+                <a href="" class="btn btn-info"> Atualizar </a>
+                <a href="" class="btn btn-outline-danger"> Deletar </a>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+      <div class="text-right">
+        <button class="btn btn-info" (click)="navigateToTravelCreate()"> Cadastrar</button>
+        <!-- <a mat-list-item  routerLink="cadastrar">cadastrar teste</a> -->
+      </div>
+    </div>
+  </div>
