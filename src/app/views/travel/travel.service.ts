@@ -9,7 +9,7 @@ import { Travel } from './models/travel';
 })
 export class TravelService {
 
-  url = 'http://192.168.0.102:8080/api/v1/travel';
+  url = 'https://localhost:44325/api/pet';
 
   // injetando o HttpClient
   constructor(private httpClient: HttpClient) { }

@@ -10,7 +10,7 @@ import { Company } from './models/company';
 })
 export class AppService {
 
-  url = 'http://192.168.0.102:8080/api/v1/register/user/company';
+  url = 'https://localhost:44325/api/autenticacao/logar';
 
   // injetando o HttpClient
   constructor(private httpClient: HttpClient) { }
@@ -20,25 +20,15 @@ export class AppService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
-  // Obtem todos os carros
-  getCars(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.url)
-      .pipe(
-        retry(2),
-        catchError(this.handleError))
-  }
+    postLogin(user: User) {
+        return this.httpClient.post<User>(this.url, JSON.stringify(user), this.httpOptions)
+        .pipe(
+          retry(2),
+          catchError(err=> Observable.throw(err.message)))
+    }
 
-  // Obtem um carro pelo id
-  getCarById(id: number): Observable<User> {
-    return this.httpClient.get<User>(this.url + '/' + id)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      )
-  }
-
-  // salva um user
-  saveUser(user: User): Observable<User> {
+    // salva um user
+  saveUser(user: User): Observable<User>{
     return this.httpClient.post<User>(this.url, JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(2),

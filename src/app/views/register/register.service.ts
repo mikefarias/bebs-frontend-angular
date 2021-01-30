@@ -9,7 +9,7 @@ import { Company } from './models/company';
 })
 export class RegisterService {
 
-  url = 'http://192.168.0.102:8080/api/v1/register/user/company';
+  url = 'http://192.168.0.102:8080//api/autenticacao/registrar';
 
   // injetando o HttpClient
   constructor(private httpClient: HttpClient) { }

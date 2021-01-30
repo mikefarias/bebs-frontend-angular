@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit{
   ngOnInit() {
   }
 
-  registerUserCompany(frm: FormGroup) {
+  registerUser(frm: FormGroup) {
     this.service.postUserCompany(this.company);
     frm.reset();
     this.router.navigate(['/login']);
