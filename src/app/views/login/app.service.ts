@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { User } from './models/user';
-import { Company } from './models/company';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
-  url = 'https://localhost:44325/api/autenticacao/logar';
+  url = 'https://localhost:44325/api/autenticacao/';
 
   // injetando o HttpClient
   constructor(private httpClient: HttpClient) { }
@@ -20,30 +19,26 @@ export class AppService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
-    postLogin(user: User) {
-        return this.httpClient.post<User>(this.url, JSON.stringify(user), this.httpOptions)
+  registrarUsuario(user: User): Observable<User> {
+    let response = this.httpClient
+        .post(this.url + 'registrar', JSON.stringify(user), this.httpOptions)
         .pipe(
-          retry(2),
-          catchError(err=> Observable.throw(err.message)))
-    }
+            map(this.extractData),
+            catchError(this.handleError));
 
-    // salva um user
-  saveUser(user: User): Observable<User>{
-    return this.httpClient.post<User>(this.url, JSON.stringify(user), this.httpOptions)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      )
+    return response;
   }
 
-    // salva um user
-    saveUserCompany(company: Company): Observable<Company> {
-      return this.httpClient.post<Company>(this.url, JSON.stringify(company), this.httpOptions)
+  login(user: User): Observable<User> {
+    let response = this.httpClient
+        .post(this.url + 'logar', JSON.stringify(user), this.httpOptions)
         .pipe(
-          retry(2),
-          catchError(this.handleError)
-        )
-    }
+            map(this.extractData),
+            catchError(this.handleError));
+
+    return response;
+}
+
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -57,5 +52,9 @@ export class AppService {
     console.log(errorMessage);
     return throwError(errorMessage);
   };
+
+  extractData(response: any) {
+    return response.data || {};
+  }
 
 }
