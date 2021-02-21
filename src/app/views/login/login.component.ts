@@ -1,9 +1,10 @@
 import { User } from './models/user';
 import { Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormControlName } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from './app.service';
 import { LocalStorageUtils } from '../../util/localstorage';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,9 +17,13 @@ export class LoginComponent implements OnInit{
   errors: any[] = [];
   user:User;
   loginForm: FormGroup;
+
   public LocalStorage = new LocalStorageUtils();
 
-  constructor(private service: AppService, private router: Router,private fb: FormBuilder,) {}
+  constructor(private service: AppService, 
+    private router: Router,
+    private fb: FormBuilder,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
 
@@ -37,26 +42,29 @@ export class LoginComponent implements OnInit{
         falha => {this.processarFalha(falha)}
       );
     }
-    this.router.navigate(['/login']);
   }
 
   processarSucesso(response: any) {
-    this.errors = [];
+    if(response.sucesso){
+      this.LocalStorage.salvarDadosLocaisUsuario(response);
 
-    this.LocalStorage.salvarDadosLocaisUsuario(response);
+      let toast = this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!');
+      if(toast){
+        toast.onHidden.subscribe(() => {
+          this.router.navigate(['/']);
+        });
+      }
+    }
+    else
+    {
+      this.toastr.error(response.erros);
+    }
 
-    //let toast = this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!');
-    //if(toast){
-    //  toast.onHidden.subscribe(() => {
-      console.log('Login realizado com Sucesso!', 'Bem vindo!!!');
-        this.router.navigate(['/']);
-    //  });
-    //}
   }
 
   processarFalha(fail: any){
-    this.errors = fail.error.errors;
-    //this.toastr.error('Ocorreu um erro!', 'Opa :(');
-    console.log('Deu ruim :/ ');
+    this.errors = fail.error.erros;
+    console.log(fail.error.erros)
+    this.toastr.error('Ocorreu um erro!', 'Opa :(');
   }
 }

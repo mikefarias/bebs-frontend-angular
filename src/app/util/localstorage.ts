@@ -25,5 +25,5 @@ export class LocalStorageUtils {
     public salvarUsuario(user: string) {
         localStorage.setItem('bebs.user', JSON.stringify(user));
     }
-
+    
 }

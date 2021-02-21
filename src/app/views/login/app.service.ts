@@ -3,25 +3,18 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from './models/user';
+import { BaseService } from '../../services/baseService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
+export class AppService extends BaseService{
 
-  url = 'https://localhost:44325/api/autenticacao/';
-
-  // injetando o HttpClient
-  constructor(private httpClient: HttpClient) { }
-
-  // Headers
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  }
+  constructor(private httpClient: HttpClient) { super();}
 
   registrarUsuario(user: User): Observable<User> {
     let response = this.httpClient
-        .post(this.url + 'registrar', JSON.stringify(user), this.httpOptions)
+        .post(this.UrlServiceV1 + '/autenticacao/registrar', JSON.stringify(user), this.ObterHeaderJson())
         .pipe(
             map(this.extractData),
             catchError(this.handleError));
@@ -31,11 +24,10 @@ export class AppService {
 
   login(user: User): Observable<User> {
     let response = this.httpClient
-        .post(this.url + 'logar', JSON.stringify(user), this.httpOptions)
+        .post(this.UrlServiceV1 + '/autenticacao/logar', JSON.stringify(user), this.ObterHeaderJson())
         .pipe(
-            map(this.extractData),
-            catchError(this.handleError));
-
+            map(this.extractData));
+          
     return response;
 }
 
