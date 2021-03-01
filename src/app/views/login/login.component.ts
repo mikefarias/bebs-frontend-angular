@@ -42,6 +42,9 @@ export class LoginComponent implements OnInit{
         falha => {this.processarFalha(falha)}
       );
     }
+    else{
+      this.toastr.error("Usuário e/ou Senha inválidos!");
+    }
   }
 
   processarSucesso(response: any) {
@@ -63,8 +66,6 @@ export class LoginComponent implements OnInit{
   }
 
   processarFalha(fail: any){
-    this.errors = fail.error.erros;
-    console.log(fail.error.erros)
-    this.toastr.error('Ocorreu um erro!', 'Opa :(');
+    this.toastr.error("Usuário e/ou Senha inválidos!");
   }
 }
