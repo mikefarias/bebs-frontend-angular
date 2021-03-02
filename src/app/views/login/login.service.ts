@@ -1,30 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { User } from './models/user';
+import { map } from 'rxjs/operators';
+import { Usuario } from './models/usuario';
 import { BaseService } from '../../services/baseService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService extends BaseService{
+export class LoginService extends BaseService{
 
   constructor(private httpClient: HttpClient) { super();}
 
-  registrarUsuario(user: User): Observable<User> {
+  login(usuario: Usuario): Observable<Usuario> {
     let response = this.httpClient
-        .post(this.UrlServiceV1 + '/autenticacao/registrar', JSON.stringify(user), this.ObterHeaderJson())
-        .pipe(
-            map(this.extractData),
-            catchError(this.handleError));
-
-    return response;
-  }
-
-  login(user: User): Observable<User> {
-    let response = this.httpClient
-        .post(this.UrlServiceV1 + '/autenticacao/logar', JSON.stringify(user), this.ObterHeaderJson())
+        .post(this.UrlServiceV1 + '/autenticacao/logar', JSON.stringify(usuario), this.ObterHeaderJson())
         .pipe(
             map(this.extractData));
           

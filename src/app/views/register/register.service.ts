@@ -1,32 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import { Company } from './models/company';
-
+import { map } from 'rxjs/operators';
+import { Usuario} from './models/usuario';
+import { BaseService } from '../../services/baseService';
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterService {
-
-  url = 'http://192.168.0.102:8080//api/autenticacao/registrar';
+export class RegisterService extends BaseService{
 
   // injetando o HttpClient
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { super();}
 
-  // Headers
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  registrarUsuario(usuario: Usuario): Observable<Usuario> {
+    let response = this.httpClient
+        .post(this.UrlServiceV1 + '/autenticacao/registrar', JSON.stringify(usuario), this.ObterHeaderJson())
+        .pipe(
+            map(this.extractData));
+
+    return response;
   }
 
-  // salva um user
-  postUserCompany(company: Company) {
-      return this.httpClient.post<Company>(this.url, JSON.stringify(company), this.httpOptions)
-        .pipe(
-          retry(2),
-          catchError(this.handleError)
-        )
-    }
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';

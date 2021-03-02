@@ -1,10 +1,10 @@
-import { User } from './models/user';
+import { Usuario } from './models/usuario';
 import { Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppService } from './app.service';
 import { LocalStorageUtils } from '../../util/localstorage';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService} from './login.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,13 +14,13 @@ export class LoginComponent implements OnInit{
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-  errors: any[] = [];
-  user:User;
-  loginForm: FormGroup;
+  errors : any[] = [];
+  usuario : Usuario;
+  loginForm : FormGroup;
 
   public LocalStorage = new LocalStorageUtils();
 
-  constructor(private service: AppService, 
+  constructor(private service: LoginService, 
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService) {}
@@ -35,9 +35,9 @@ export class LoginComponent implements OnInit{
 
   login() {
     if (this.loginForm.dirty && this.loginForm.valid) {
-      this.user = Object.assign({}, this.user, this.loginForm.value);
+      this.usuario = Object.assign({}, this.usuario, this.loginForm.value);
 
-      this.service.login(this.user).subscribe( 
+      this.service.login(this.usuario).subscribe( 
         sucesso => {this.processarSucesso(sucesso)}, 
         falha => {this.processarFalha(falha)}
       );
@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit{
     {
       this.toastr.error(response.erros);
     }
-
   }
 
   processarFalha(fail: any){

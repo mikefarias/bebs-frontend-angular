@@ -1,7 +1,6 @@
-import { routes } from './../../app.routing';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Company } from './models/company';
+import { Usuario } from './models/usuario';
 import { FormGroup } from '@angular/forms';
 
 import { RegisterService } from './register.service';
@@ -12,16 +11,15 @@ import { RegisterService } from './register.service';
 })
 export class RegisterComponent implements OnInit{
 
-  company = {} as Company;
-  companies: Company[];
+  usuario = {} as Usuario;
 
   constructor(private router: Router, private service: RegisterService) {}
 
   ngOnInit() {
   }
 
-  registerUser(frm: FormGroup) {
-    this.service.postUserCompany(this.company);
+  registrarUsuario(frm: FormGroup) {
+    this.service.registrarUsuario(this.usuario);
     frm.reset();
     this.router.navigate(['/login']);
   }
