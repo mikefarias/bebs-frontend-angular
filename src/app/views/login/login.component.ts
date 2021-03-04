@@ -47,6 +47,10 @@ export class LoginComponent implements OnInit{
     }
   }
 
+  registrarUsuario() {
+    this.router.navigate(['/register']);
+  }
+
   processarSucesso(response: any) {
     if(response.userToken){
       this.LocalStorage.salvarDadosLocaisUsuario(response);
