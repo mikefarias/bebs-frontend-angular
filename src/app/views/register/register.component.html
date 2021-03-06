@@ -5,30 +5,54 @@
         <div class="col-md-6 mx-auto">
           <div class="card mx-4">
             <div class="card-body p-4">
-              <form method="POST" #frm="ngForm" (ngSubmit)="registerUser(frm)">
+              <form method="POST" #frm="ngForm" (ngSubmit)="registrarUsuario()" [formGroup]="registerForm">
                 <h1>Cadastro</h1>
                 <p class="text-muted">Crie sua conta</p>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  <div formGroupName="Ong">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-user"></i></span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Nome Ong" autocomplete="nome"
+                      name="Nome" formControlName="Nome" required>  
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-user"></i></span>
+                      </div>
+                      <input type="number" class="form-control" placeholder="Cnpj" autocomplete="Cnpj"
+                      name="Cnpj" formControlName="Cnpj" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-lock"></i></span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Celular" autocompletes="celular"
+                      name="celular" formControlName="Contato" required>
+                    </div>
                   </div>
-                  <input type="text" class="form-control" placeholder="Nome Completo" autocomplete="name"
-                  name="name" [(ngModel)]="email" required>
-                </div>
+
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">@</span>
                   </div>
                   <input type="text" class="form-control" placeholder="Email" autocomplete="email"
-                  name="email" [(ngModel)]="email" required>
+                  name="email" formControlName="Email" required>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Celular" autocomplete="celular"
-                  name="phoneNumber" [(ngModel)]="email" required>
+                  <input type="text" class="form-control" placeholder="Senha" autocomplete="senha"
+                  name="senha" formControlName="Password" required>
                 </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-lock"></i></span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Confirmar Senha" autocomplete="ConfirmarSenha"
+                  name="confirmarSenha" formControlName="ConfirmPassword" required>
+                </div>                               
                 <button type="submit" class="btn btn-block btn-success">Criar conta</button>
 
               </form>
