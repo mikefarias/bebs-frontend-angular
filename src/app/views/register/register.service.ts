@@ -20,5 +20,4 @@ export class RegisterService extends BaseService{
 
     return response;
   }
-
 }
