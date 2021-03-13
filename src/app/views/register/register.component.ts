@@ -25,7 +25,8 @@ export class RegisterComponent implements OnInit{
       Ong : this.fb.group({
         Nome: ['', [Validators.required]],
         Cnpj: ['', [Validators.required]],
-        Contato: ['', [Validators.required]]                 
+        Contato: ['', [Validators.required]],
+        Endereco: ['', [Validators.required]]                 
       })
     });
   }
@@ -35,14 +36,28 @@ export class RegisterComponent implements OnInit{
       this.usuario = Object.assign({}, this.usuario, this.registerForm.value);
 
       this.service.registrarUsuario(this.usuario).subscribe( 
-        //sucesso => {this.processarSucesso(sucesso)}, 
-        //falha => {this.processarFalha(falha)}
+        sucesso => {this.processarSucesso(sucesso)}, 
+        falha => {this.processarFalha(falha)}
       );
     }
-    else{
+    else
       this.toastr.error("Dados inválidos!");
+  }
+
+  processarSucesso(response: any) {
+    if(response.userToken){
+      let toast = this.toastr.success('Cadastro realizado com Sucesso!');
+      if(toast){
+        toast.onHidden.subscribe(() => {
+          this.router.navigate(['/login']);
+        });
+      }
     }
-    this.service.registrarUsuario(this.usuario);
-    this.router.navigate(['/login']);
+    else
+      this.toastr.error(response.erros);
+  }
+
+  processarFalha(fail: any){
+    this.toastr.error(fail.error.errors);
   }
 }
