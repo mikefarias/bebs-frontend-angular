@@ -23,6 +23,8 @@ import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
+import { AutenticacaoGuard } from './services/auteticacaoGuard';
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -64,7 +66,7 @@ import { ChartsModule } from 'ng2-charts';
   ],
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS,
+    APP_CONTAINERS,
     P404Component,
     P500Component,
     LoginComponent,
@@ -73,7 +75,9 @@ import { ChartsModule } from 'ng2-charts';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  }, 
+  AutenticacaoGuard
+],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

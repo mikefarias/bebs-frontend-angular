@@ -1,6 +1,6 @@
 export class LocalStorageUtils {
     
-    public obterUsuario() {
+    public obterUsuario(): string{
         return JSON.parse(localStorage.getItem('bebs.user'));
     }
 

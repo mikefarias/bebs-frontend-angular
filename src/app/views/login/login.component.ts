@@ -55,17 +55,11 @@ export class LoginComponent implements OnInit{
     if(response.userToken){
       this.LocalStorage.salvarDadosLocaisUsuario(response);
 
-      let toast = this.toastr.success('Login realizado com Sucesso!');
-      if(toast){
-        toast.onHidden.subscribe(() => {
-          this.router.navigate(['/']);
-        });
-      }
+      this.toastr.success('Login realizado com Sucesso!');
+      this.router.navigate(['/']);
     }
     else
-    {
       this.toastr.error(response.erros);
-    }
   }
 
   processarFalha(fail: any){
