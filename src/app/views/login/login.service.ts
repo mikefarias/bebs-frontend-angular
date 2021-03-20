@@ -19,8 +19,8 @@ export class LoginService extends BaseService{
             map(this.extractData));
           
     return response;
-}
-
+  }
+  
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
